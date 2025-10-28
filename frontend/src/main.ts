@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage.vue'
 import ChatPage from './pages/ChatPage.vue'
 import LoginPage from './pages/LoginPage.vue'
 import MainLayout from './pages/MainLayout.vue'
+import { LandingPage } from './components/home'
 import { configure } from "vue-gtag";
 
 configure({
@@ -23,6 +24,11 @@ export const router = createRouter({
   history: createWebHistory(),
   routes: [
     { 
+      path: '/', 
+      component: LandingPage,
+      alias: ['/home', '/landing']
+    },
+    { 
       path: '/chat', 
       component: MainLayout,
       meta: { requiresAuth: true },
@@ -30,7 +36,6 @@ export const router = createRouter({
         { 
           path: '', 
           component: HomePage, 
-          alias: ['/', '/home'],
           meta: { requiresAuth: true }
         },
         { 
@@ -70,7 +75,7 @@ router.beforeEach(async (to, _, next) => {
   }
   
   if (to.path === '/login' && hasToken) {
-    next('/')
+    next('/chat')
   } else {
     next()
   }

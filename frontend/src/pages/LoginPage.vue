@@ -1,48 +1,32 @@
 <template>
-  <div class="w-full min-h-[100vh] relative bg-[var(--background-gray-main)] dark:bg-[#050505]">
-    <div class="sticky top-0 left-0 w-full z-[10] px-[48px] max-sm:px-[12px] max-sm:bg-[var(--background-gray-login)]">
-      <div class="w-full h-[60px] mx-auto flex items-center justify-between text-[var(--text-primary)]">
-        <a href="/">
-          <div class="flex">
-            <ManusLogoTextIcon :width="44" :height="19" :textSize="14" />
-          </div>
-        </a>
-      </div>
-    </div>
-    <div
-      class="relative z-[1] flex flex-col justify-center items-center min-h-[100vh] pt-[20px] pb-[60px] -mt-[60px] max-sm:pt-[80px] max-sm:pb-[80px] max-sm:mt-0 max-sm:min-h-[calc(100vh-60px)] max-sm:justify-start">
-      <div class="w-full max-w-[720px] pt-[24px] mb-[40px] max-sm:pt-[0px]">
-        <div class="flex flex-col items-center gap-[20px] relative" style="z-index:1">
-          <div class="w-[80px] h-[80px] text-[var(--icon-primary)] max-sm:w-[64px] max-sm:h-[64px]">
-            <img src="/lads-logo.png" alt="LADS" width="80" height="80" />
-          </div>
-          <h1 class="text-[20px] font-bold text-center text-[var(--text-primary)] max-sm:text-[18px]">
-            {{ 
-              isResettingPassword ? t('Reset Password') 
-              : isRegistering ? t('Register to LADS') 
-              : t('Login to LADS') 
-            }}
-          </h1>
-          <!-- Global toggle to register to ensure visibility -->
-          <div v-if="!isRegistering && !isResettingPassword" class="text-center text-[13px] leading-[18px] text-[var(--text-tertiary)] mt-[4px]">
-            <span>{{ t('Don\'t have an account?') }}</span>
-            <span
-              class="ms-[8px] text-[var(--text-secondary)] cursor-pointer select-none hover:opacity-80 active:opacity-70 transition-all underline"
-              @click="switchToRegister">
-              {{ t('Register') }}
-            </span>
+  <div class="login-page">
+    <Navbar />
+    <div class="login-content-wrapper">
+      <div class="login-content">
+        <div class="w-full max-w-[720px] mb-[32px] max-sm:mb-[24px]">
+          <div class="flex flex-col items-center gap-[12px] relative" style="z-index:1">
+            <div class="w-[64px] h-[64px] text-[var(--icon-primary)] max-sm:w-[56px] max-sm:h-[56px]">
+              <img src="/lads-logo.png" alt="LADS" class="w-full h-full object-contain" />
+            </div>
+            <h1 class="text-[24px] font-bold text-center text-[var(--text-primary)] max-sm:text-[20px]">
+              {{ 
+                isResettingPassword ? t('Reset Password') 
+                : isRegistering ? t('Register to LADS') 
+                : t('Login to LADS') 
+              }}
+            </h1>
           </div>
         </div>
+        <LoginForm v-if="!isRegistering && !isResettingPassword" 
+          @success="handleLoginSuccess" 
+          @switch-to-register="switchToRegister" 
+          @switch-to-reset="switchToReset" />
+        <RegisterForm v-else-if="isRegistering && !isResettingPassword" 
+          @success="handleLoginSuccess" 
+          @switch-to-login="switchToLogin" />
+        <ResetPasswordForm v-else-if="isResettingPassword" 
+          @back-to-login="switchToLogin" />
       </div>
-      <LoginForm v-if="!isRegistering && !isResettingPassword" 
-        @success="handleLoginSuccess" 
-        @switch-to-register="switchToRegister" 
-        @switch-to-reset="switchToReset" />
-      <RegisterForm v-else-if="isRegistering && !isResettingPassword" 
-        @success="handleLoginSuccess" 
-        @switch-to-login="switchToLogin" />
-      <ResetPasswordForm v-else-if="isResettingPassword" 
-        @back-to-login="switchToLogin" />
     </div>
   </div>
 </template>
@@ -51,7 +35,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import ManusLogoTextIcon from '@/components/icons/ManusLogoTextIcon.vue'
+import { Navbar } from '@/components/home'
 import LoginForm from '@/components/login/LoginForm.vue'
 import RegisterForm from '@/components/login/RegisterForm.vue'
 import ResetPasswordForm from '@/components/login/ResetPasswordForm.vue'
@@ -97,10 +81,103 @@ watch(isAuthenticated, (authenticated) => {
   }
 })
 
+// Check URL query parameter for mode
+const checkRouteMode = () => {
+  const mode = router.currentRoute.value.query.mode as string
+  if (mode === 'register') {
+    isRegistering.value = true
+  } else if (mode === 'reset') {
+    isResettingPassword.value = true
+  } else {
+    isRegistering.value = false
+    isResettingPassword.value = false
+  }
+}
+
 // Check if already logged in when page loads
 onMounted(() => {
   if (isAuthenticated.value) {
     router.push('/')
   }
+  checkRouteMode()
+})
+
+// Watch for route changes
+watch(() => router.currentRoute.value.query.mode, () => {
+  checkRouteMode()
 })
 </script>
+
+<style scoped>
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+
+:global(.dark) .login-page {
+  background: #0a0a0a;
+}
+
+/* Grainy texture effect */
+.login-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+:global(.dark) .login-page::before {
+  opacity: 0.25;
+}
+
+/* Subtle vignette effect */
+.login-page::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.15) 100%);
+  pointer-events: none;
+}
+
+:global(.dark) .login-page::after {
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+/* Center the login content */
+.login-content-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 100px 1rem 60px;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 720px;
+}
+
+@media (max-width: 640px) {
+  .login-content-wrapper {
+    padding: 120px 1rem 60px;
+    min-height: calc(100vh - 60px);
+  }
+}
+</style>
