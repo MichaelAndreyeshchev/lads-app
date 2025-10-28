@@ -29,7 +29,13 @@
           <div class="w-full flex justify-between items-center">
           </div>
         </div>
-        <div class="flex-1"></div>
+        <div class="flex items-center gap-2">
+          <div v-if="currentUser" @click="toggleUserMenu"
+            class="relative flex items-center justify-center font-bold cursor-pointer flex-shrink-0 rounded-full overflow-hidden"
+            style="width: 32px; height: 32px; font-size: 16px; color: rgba(255, 255, 255, 0.9); background-color: rgb(59, 130, 246);">
+            {{ avatarLetter }}
+          </div>
+        </div>
       </div>
       <div class="mx-auto w-full max-w-full sm:max-w-[768px] sm:min-w-[390px] flex flex-col flex-1">
         <div class="flex flex-col w-full gap-[12px] pb-[80px] pt-[12px] flex-1 overflow-y-auto">
@@ -67,7 +73,7 @@
 
 <script setup lang="ts">
 import SimpleBar from '../components/SimpleBar.vue';
-import { ref, onMounted, watch, nextTick, onUnmounted, reactive, toRefs } from 'vue';
+import { ref, onMounted, watch, nextTick, onUnmounted, reactive, toRefs, computed } from 'vue';
 import { useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import ChatBox from '../components/ChatBox.vue';
@@ -92,12 +98,27 @@ import { useLeftPanel } from '../composables/useLeftPanel'
 import { useSessionFileList } from '../composables/useSessionFileList'
 import { useFilePanel } from '../composables/useFilePanel'
 import { SessionStatus } from '../types/response';
+import UserMenu from '../components/UserMenu.vue';
+import { useContextMenu } from '../composables/useContextMenu';
+import { useAuth } from '../composables/useAuth';
 
 const router = useRouter()
 const { t } = useI18n()
 const { toggleLeftPanel, isLeftPanelShow } = useLeftPanel()
 const { showSessionFileList } = useSessionFileList()
 const { hideFilePanel } = useFilePanel()
+const { currentUser } = useAuth()
+const { openContextMenu } = useContextMenu()
+
+// Get first letter of user's fullname for avatar display
+const avatarLetter = computed(() => {
+  return currentUser.value?.fullname?.charAt(0)?.toUpperCase() || 'U';
+})
+
+// Toggle user menu
+const toggleUserMenu = (event: MouseEvent) => {
+  openContextMenu(event, UserMenu);
+}
 
 // Create initial state factory
 const createInitialState = () => ({

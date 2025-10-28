@@ -4,7 +4,7 @@
       <div class="w-full h-[60px] mx-auto flex items-center justify-between text-[var(--text-primary)]">
         <a href="/">
           <div class="flex">
-            <ManusLogoTextIcon />
+            <ManusLogoTextIcon :width="44" :height="19" :textSize="14" />
           </div>
         </a>
       </div>

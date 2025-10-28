@@ -13,11 +13,17 @@
             </div>
             <div class="flex">
               <div class="flex">
-                <ManusLogoTextIcon />
+                <ManusLogoTextIcon :width="44" :height="19" :textSize="14" />
               </div>
             </div>
           </div>
-          <!-- right header content removed per request -->
+          <div class="flex items-center gap-2">
+            <div v-if="currentUser" @click="toggleUserMenu"
+              class="relative flex items-center justify-center font-bold cursor-pointer flex-shrink-0 rounded-full overflow-hidden"
+              style="width: 32px; height: 32px; font-size: 16px; color: rgba(255, 255, 255, 0.9); background-color: rgb(59, 130, 246);">
+              {{ avatarLetter }}
+            </div>
+          </div>
         </div>
         <div class="h-8"></div>
       </div>
@@ -60,7 +66,8 @@ import type { FileInfo } from '../api/file';
 import { useLeftPanel } from '../composables/useLeftPanel';
 import { useFilePanel } from '../composables/useFilePanel';
 import { useAuth } from '../composables/useAuth';
-// UserMenu removed with header cleanup
+import UserMenu from '../components/UserMenu.vue';
+import { useContextMenu } from '../composables/useContextMenu';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -70,9 +77,17 @@ const attachments = ref<FileInfo[]>([]);
 const { toggleLeftPanel, isLeftPanelShow } = useLeftPanel();
 const { hideFilePanel } = useFilePanel();
 const { currentUser } = useAuth();
+const { openContextMenu } = useContextMenu();
 
 // Get first letter of user's fullname for avatar display
-// Avatar and user menu removed with header cleanup
+const avatarLetter = computed(() => {
+  return currentUser.value?.fullname?.charAt(0)?.toUpperCase() || 'U';
+});
+
+// Toggle user menu
+const toggleUserMenu = (event: MouseEvent) => {
+  openContextMenu(event, UserMenu);
+};
 
 onMounted(() => {
   hideFilePanel();
