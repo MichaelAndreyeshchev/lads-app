@@ -36,15 +36,32 @@
           </span>
         </button>
       </div>
+      
+      <!-- Beta Waitlist Count Tag -->
+      <div class="flex justify-center items-center gap-3 mt-6 flex-wrap">
+        <div class="beta-tag">
+          <span class="beta-dot"></span>
+          <span class="beta-text">{{ betaWaitlistCount }} on the beta waitlist</span>
+        </div>
+        <div class="user-count-tag">
+          <span class="user-dot"></span>
+          <span class="user-text">{{ usersDeployingCount }} users deploying daily</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 import { Rocket, LogIn, Sparkles } from 'lucide-vue-next';
 
 const router = useRouter();
+
+// Manually set counts - update these values as needed
+const betaWaitlistCount = ref('0');
+const usersDeployingCount = ref('0');
 
 const handleRegister = () => {
   router.push('/login?mode=register');
@@ -492,10 +509,196 @@ const handleBeta = () => {
               inset 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
 
+/* Beta Waitlist Tag */
+.beta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 24px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(34, 197, 94, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.beta-tag::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.beta-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.beta-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #22c55e;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+:global(.dark) .beta-tag {
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  box-shadow: 0 2px 12px rgba(34, 197, 94, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .beta-text {
+  color: #4ade80;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* User Count Tag */
+.user-count-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 24px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.user-count-tag::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.user-dot {
+  width: 8px;
+  height: 8px;
+  background: #3b82f6;
+  border-radius: 50%;
+  animation: pulse-blue 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+  flex-shrink: 0;
+}
+
+@keyframes pulse-blue {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.user-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3b82f6;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+:global(.dark) .user-count-tag {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .user-text {
+  color: #60a5fa;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
 @media (max-width: 768px) {
   .glass-container {
     padding: 2rem 1.5rem;
     border-radius: 24px;
+  }
+  
+  .beta-tag {
+    padding: 6px 14px;
+    gap: 6px;
+  }
+  
+  .beta-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .beta-text {
+    font-size: 13px;
+  }
+
+  .user-count-tag {
+    padding: 6px 14px;
+    gap: 6px;
+  }
+  
+  .user-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .user-text {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 640px) {
+  .beta-tag {
+    padding: 5px 12px;
+    gap: 5px;
+  }
+  
+  .beta-text {
+    font-size: 12px;
+  }
+
+  .user-count-tag {
+    padding: 5px 12px;
+    gap: 5px;
+  }
+  
+  .user-text {
+    font-size: 12px;
   }
 }
 </style>

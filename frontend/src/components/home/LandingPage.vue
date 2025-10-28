@@ -1,20 +1,31 @@
 <template>
-  <div class="landing-page">
-    <Navbar />
-    <div class="max-w-7xl w-full px-4">
-      <div class="text-center">
-        <CTASection />
+  <div class="landing-page-wrapper">
+    <div class="landing-page hero-section">
+      <Navbar />
+      <div class="max-w-7xl w-full px-4">
+        <div class="text-center">
+          <CTASection />
+          <ScrollIndicator />
+        </div>
       </div>
     </div>
+    <VideoDemoSection />
   </div>
 </template>
 
 <script setup lang="ts">
 import CTASection from './CTASection.vue';
 import Navbar from './Navbar.vue';
+import VideoDemoSection from './VideoDemoSection.vue';
+import ScrollIndicator from './ScrollIndicator.vue';
 </script>
 
 <style scoped>
+.landing-page-wrapper {
+  width: 100%;
+  position: relative;
+}
+
 .landing-page {
   min-height: 100vh;
   display: flex;
@@ -23,6 +34,10 @@ import Navbar from './Navbar.vue';
   background: #f5f5f5;
   position: relative;
   overflow: hidden;
+}
+
+.hero-section {
+  position: relative;
 }
 
 :global(.dark) .landing-page {
