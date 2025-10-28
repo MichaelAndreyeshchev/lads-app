@@ -103,7 +103,7 @@ const emits = defineEmits<{
 }>()
 
 const { login, isLoading, authError } = useAuth()
-const hasRegister = ref(false)
+const hasRegister = ref(true)
 
 // Form state
 const showPassword = ref(false)
@@ -201,7 +201,8 @@ const handleSubmit = async () => {
 
 onMounted(async () => {
   const authProvider = await getCachedAuthProvider()
-  hasRegister.value = authProvider === 'password'
+  // Default to showing register; hide only if provider explicitly disallows it
+  hasRegister.value = authProvider === null ? true : authProvider === 'password'
 })
 
 // Expose clearForm method for parent component

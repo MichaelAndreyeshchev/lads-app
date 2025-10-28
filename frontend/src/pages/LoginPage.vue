@@ -23,6 +23,15 @@
               : t('Login to LADS') 
             }}
           </h1>
+          <!-- Global toggle to register to ensure visibility -->
+          <div v-if="!isRegistering && !isResettingPassword" class="text-center text-[13px] leading-[18px] text-[var(--text-tertiary)] mt-[4px]">
+            <span>{{ t('Don\'t have an account?') }}</span>
+            <span
+              class="ms-[8px] text-[var(--text-secondary)] cursor-pointer select-none hover:opacity-80 active:opacity-70 transition-all underline"
+              @click="switchToRegister">
+              {{ t('Register') }}
+            </span>
+          </div>
         </div>
       </div>
       <LoginForm v-if="!isRegistering && !isResettingPassword" 

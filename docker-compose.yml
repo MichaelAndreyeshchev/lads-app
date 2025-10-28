@@ -40,6 +40,8 @@ services:
       - lads-network
     env_file:
       - .env
+    environment:
+      - AUTH_PROVIDER=password
 
   sandbox:
     image: ${IMAGE_REGISTRY:-lads}/lads-sandbox:${IMAGE_TAG:-latest}
