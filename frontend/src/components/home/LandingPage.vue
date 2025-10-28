@@ -10,6 +10,7 @@
       </div>
     </div>
     <VideoDemoSection />
+    <Footer />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import CTASection from './CTASection.vue';
 import Navbar from './Navbar.vue';
 import VideoDemoSection from './VideoDemoSection.vue';
 import ScrollIndicator from './ScrollIndicator.vue';
+import Footer from './Footer.vue';
 </script>
 
 <style scoped>
