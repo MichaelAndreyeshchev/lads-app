@@ -30,10 +30,15 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <div v-if="currentUser" @click="toggleUserMenu"
-            class="relative flex items-center justify-center font-bold cursor-pointer flex-shrink-0 rounded-full overflow-hidden"
-            style="width: 32px; height: 32px; font-size: 16px; color: rgba(255, 255, 255, 0.9); background-color: rgb(59, 130, 246);">
-            {{ avatarLetter }}
+          <div ref="userMenuRef" class="relative">
+            <div v-if="currentUser" @click="toggleUserMenu"
+              class="relative flex items-center justify-center font-bold cursor-pointer flex-shrink-0 rounded-full overflow-hidden"
+              style="width: 32px; height: 32px; font-size: 16px; color: rgba(255, 255, 255, 0.9); background-color: rgb(59, 130, 246);">
+              {{ avatarLetter }}
+            </div>
+            <div v-if="showUserMenu" class="absolute top-full right-0 mt-2 z-50">
+              <UserMenu />
+            </div>
           </div>
         </div>
       </div>
@@ -99,7 +104,6 @@ import { useSessionFileList } from '../composables/useSessionFileList'
 import { useFilePanel } from '../composables/useFilePanel'
 import { SessionStatus } from '../types/response';
 import UserMenu from '../components/UserMenu.vue';
-import { useContextMenu } from '../composables/useContextMenu';
 import { useAuth } from '../composables/useAuth';
 
 const router = useRouter()
@@ -108,7 +112,8 @@ const { toggleLeftPanel, isLeftPanelShow } = useLeftPanel()
 const { showSessionFileList } = useSessionFileList()
 const { hideFilePanel } = useFilePanel()
 const { currentUser } = useAuth()
-const { openContextMenu } = useContextMenu()
+const showUserMenu = ref(false)
+const userMenuRef = ref<HTMLElement>()
 
 // Get first letter of user's fullname for avatar display
 const avatarLetter = computed(() => {
@@ -117,7 +122,8 @@ const avatarLetter = computed(() => {
 
 // Toggle user menu
 const toggleUserMenu = (event: MouseEvent) => {
-  openContextMenu(event, UserMenu);
+  event.stopPropagation();
+  showUserMenu.value = !showUserMenu.value;
 }
 
 // Create initial state factory
@@ -434,8 +440,13 @@ onMounted(() => {
       restoreSession();
     }
   }
-
-
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (userMenuRef.value && !userMenuRef.value.contains(e.target as Node)) {
+      showUserMenu.value = false;
+    }
+  });
 });
 
 onUnmounted(() => {
@@ -443,6 +454,7 @@ onUnmounted(() => {
     cancelCurrentChat.value();
     cancelCurrentChat.value = null;
   }
+  document.removeEventListener('click', () => {});
 })
 
 const isLastNoMessageTool = (tool: ToolContent) => {

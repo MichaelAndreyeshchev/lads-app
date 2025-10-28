@@ -18,10 +18,15 @@
             </div>
           </div>
           <div class="flex items-center gap-2">
-            <div v-if="currentUser" @click="toggleUserMenu"
-              class="relative flex items-center justify-center font-bold cursor-pointer flex-shrink-0 rounded-full overflow-hidden"
-              style="width: 32px; height: 32px; font-size: 16px; color: rgba(255, 255, 255, 0.9); background-color: rgb(59, 130, 246);">
-              {{ avatarLetter }}
+            <div ref="userMenuRef" class="relative">
+              <div v-if="currentUser" @click="toggleUserMenu"
+                class="relative flex items-center justify-center font-bold cursor-pointer flex-shrink-0 rounded-full overflow-hidden"
+                style="width: 32px; height: 32px; font-size: 16px; color: rgba(255, 255, 255, 0.9); background-color: rgb(59, 130, 246);">
+                {{ avatarLetter }}
+              </div>
+              <div v-if="showUserMenu" class="absolute top-full right-0 mt-2 z-50">
+                <UserMenu />
+              </div>
             </div>
           </div>
         </div>
@@ -54,7 +59,7 @@
 
 <script setup lang="ts">
 import SimpleBar from '../components/SimpleBar.vue';
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import ChatBox from '../components/ChatBox.vue';
@@ -67,7 +72,6 @@ import { useLeftPanel } from '../composables/useLeftPanel';
 import { useFilePanel } from '../composables/useFilePanel';
 import { useAuth } from '../composables/useAuth';
 import UserMenu from '../components/UserMenu.vue';
-import { useContextMenu } from '../composables/useContextMenu';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -77,7 +81,8 @@ const attachments = ref<FileInfo[]>([]);
 const { toggleLeftPanel, isLeftPanelShow } = useLeftPanel();
 const { hideFilePanel } = useFilePanel();
 const { currentUser } = useAuth();
-const { openContextMenu } = useContextMenu();
+const showUserMenu = ref(false);
+const userMenuRef = ref<HTMLElement>();
 
 // Get first letter of user's fullname for avatar display
 const avatarLetter = computed(() => {
@@ -86,8 +91,22 @@ const avatarLetter = computed(() => {
 
 // Toggle user menu
 const toggleUserMenu = (event: MouseEvent) => {
-  openContextMenu(event, UserMenu);
+  event.stopPropagation();
+  showUserMenu.value = !showUserMenu.value;
 };
+
+// Close menu when clicking outside
+onMounted(() => {
+  document.addEventListener('click', (e) => {
+    if (userMenuRef.value && !userMenuRef.value.contains(e.target as Node)) {
+      showUserMenu.value = false;
+    }
+  });
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', () => {});
+});
 
 onMounted(() => {
   hideFilePanel();

@@ -25,6 +25,10 @@
           <GeneralSettings />
         </template>
         
+        <template #aws>
+          <AWSSettings />
+        </template>
+        
       </SettingsTabs>
       
     </DialogContent>
@@ -33,7 +37,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { UserRound, Settings2 } from 'lucide-vue-next'
+import { UserRound, Settings2, CloudCog } from 'lucide-vue-next'
 import {
   Dialog,
   DialogContent,
@@ -45,6 +49,7 @@ import SettingsTabs from './SettingsTabs.vue'
 import AccountSettings from './AccountSettings.vue'
 import GeneralSettings from './GeneralSettings.vue'
 import ProfileSettings from './ProfileSettings.vue'
+import AWSSettings from './AWSSettings.vue'
 import type { TabItem, SubPageConfig } from './SettingsTabs.vue'
 
 // Use global settings dialog state
@@ -64,6 +69,11 @@ const tabs: TabItem[] = [
     id: 'settings',
     label: 'Settings',
     icon: Settings2
+  },
+  {
+    id: 'aws',
+    label: 'AWS',
+    icon: CloudCog
   }
 ]
 
