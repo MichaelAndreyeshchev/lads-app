@@ -1,37 +1,17 @@
 <template>
+  <!-- Glassmorphic Navbar (outside SimpleBar so it stays fixed) -->
+  <ChatNavbar />
+  
+  <!-- Left Panel Toggle -->
+  <div v-if="!isLeftPanelShow" @click="toggleLeftPanel"
+    class="panel-toggle-btn">
+    <PanelLeft class="size-5 text-[var(--icon-secondary)]" />
+  </div>
+
   <SimpleBar>
     <div
-      class="flex flex-col h-full flex-1 min-w-0 mx-auto w-full sm:min-w-[390px] px-5 justify-center items-start gap-2 relative max-w-full sm:max-w-full">
-      <div class="w-full pt-4 pb-4 px-5 bg-[var(--background-gray-main)] sticky top-0 z-10 mx-[-1.25]">
-        <div class="flex justify-between items-center w-full absolute left-0 right-0">
-          <div class="h-8 relative z-20 overflow-hidden flex gap-2 items-center flex-shrink-0">
-            <div class="relative flex items-center">
-              <div @click="toggleLeftPanel" v-if="!isLeftPanelShow"
-                class="flex h-7 w-7 items-center justify-center cursor-pointer rounded-md hover:bg-[var(--fill-tsp-gray-main)]">
-                <PanelLeft class="size-5 text-[var(--icon-secondary)]" />
-              </div>
-            </div>
-            <div class="flex">
-              <div class="flex">
-                <ManusLogoTextIcon :width="44" :height="19" :textSize="14" />
-              </div>
-            </div>
-          </div>
-          <div class="flex items-center gap-2">
-            <div ref="userMenuRef" class="relative">
-              <div v-if="currentUser" @click="toggleUserMenu"
-                class="relative flex items-center justify-center font-bold cursor-pointer flex-shrink-0 rounded-full overflow-hidden"
-                style="width: 32px; height: 32px; font-size: 16px; color: rgba(255, 255, 255, 0.9); background-color: rgb(59, 130, 246);">
-                {{ avatarLetter }}
-              </div>
-              <div v-if="showUserMenu" class="absolute top-full right-0 mt-2 z-50">
-                <UserMenu />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="h-8"></div>
-      </div>
+      class="flex flex-col h-full flex-1 min-w-0 mx-auto w-full sm:min-w-[390px] px-5 justify-center items-start gap-2 relative max-w-full sm:max-w-full" 
+      style="padding-top: 80px;">
       <div class="w-full max-w-full sm:max-w-[768px] sm:min-w-[390px] mx-auto mt-[180px] mb-auto">
         <div class="w-full flex pl-4 items-center justify-start pb-4">
           <span class="text-[var(--text-primary)] text-start font-serif text-[32px] leading-[40px]" :style="{
@@ -59,19 +39,18 @@
 
 <script setup lang="ts">
 import SimpleBar from '../components/SimpleBar.vue';
-import { ref, onMounted, computed, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import ChatBox from '../components/ChatBox.vue';
+import ChatNavbar from '../components/ChatNavbar.vue';
 import { createSession } from '../api/agent';
 import { showErrorToast } from '../utils/toast';
 import { PanelLeft } from 'lucide-vue-next';
-import ManusLogoTextIcon from '../components/icons/ManusLogoTextIcon.vue';
 import type { FileInfo } from '../api/file';
 import { useLeftPanel } from '../composables/useLeftPanel';
 import { useFilePanel } from '../composables/useFilePanel';
 import { useAuth } from '../composables/useAuth';
-import UserMenu from '../components/UserMenu.vue';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -81,36 +60,10 @@ const attachments = ref<FileInfo[]>([]);
 const { toggleLeftPanel, isLeftPanelShow } = useLeftPanel();
 const { hideFilePanel } = useFilePanel();
 const { currentUser } = useAuth();
-const showUserMenu = ref(false);
-const userMenuRef = ref<HTMLElement>();
-
-// Get first letter of user's fullname for avatar display
-const avatarLetter = computed(() => {
-  return currentUser.value?.fullname?.charAt(0)?.toUpperCase() || 'U';
-});
-
-// Toggle user menu
-const toggleUserMenu = (event: MouseEvent) => {
-  event.stopPropagation();
-  showUserMenu.value = !showUserMenu.value;
-};
-
-// Close menu when clicking outside
-onMounted(() => {
-  document.addEventListener('click', (e) => {
-    if (userMenuRef.value && !userMenuRef.value.contains(e.target as Node)) {
-      showUserMenu.value = false;
-    }
-  });
-});
-
-onUnmounted(() => {
-  document.removeEventListener('click', () => {});
-});
 
 onMounted(() => {
   hideFilePanel();
-})
+});
 
 const handleSubmit = async () => {
   if (message.value.trim() && !isSubmitting.value) {
@@ -142,3 +95,83 @@ const handleSubmit = async () => {
   }
 };
 </script>
+
+<style scoped>
+/* Panel Toggle Button with glassmorphic design */
+.panel-toggle-btn {
+  position: fixed;
+  left: 16px;
+  top: 26px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+/* Grain texture overlay */
+.panel-toggle-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.15;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+}
+
+.panel-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.75);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.panel-toggle-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Dark Mode */
+:global(.dark) .panel-toggle-btn {
+  background: rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .panel-toggle-btn::before {
+  opacity: 0.2;
+}
+
+:global(.dark) .panel-toggle-btn:hover {
+  background: rgba(30, 30, 30, 0.7);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+  .panel-toggle-btn {
+    left: 12px;
+    top: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+}
+</style>

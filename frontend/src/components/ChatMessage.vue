@@ -17,7 +17,7 @@
   <div v-else-if="message.type === 'assistant'" class="flex flex-col gap-2 w-full group mt-3">
     <div class="flex items-center justify-between h-7 group">
       <div class="flex items-center gap-[3px]">
-        <img src="/lads-logo.png" alt="LADS" class="w-10 h-10" width="40" height="40" />
+        <img src="/lads-logo.png" alt="LADS" class="w-6 h-6 object-contain" width="24" height="24" />
         <ManusTextIcon />
       </div>
       <div class="flex items-center gap-[2px] invisible group-hover:visible">

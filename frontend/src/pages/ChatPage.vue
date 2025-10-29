@@ -1,47 +1,15 @@
 <template>
+  <!-- Glassmorphic Navbar (outside SimpleBar so it stays fixed) -->
+  <ChatNavbar :title="title" @fileListShow="handleFileListShow" />
+  
+  <!-- Left Panel Toggle -->
+  <div v-if="!isLeftPanelShow" @click="toggleLeftPanel"
+    class="panel-toggle-btn">
+    <PanelLeft class="size-5 text-[var(--icon-secondary)]" />
+  </div>
+
   <SimpleBar ref="simpleBarRef" @scroll="handleScroll">
-    <div ref="chatContainerRef" class="relative flex flex-col h-full flex-1 min-w-0 px-5">
-      <div ref="observerRef"
-        class="sm:min-w-[390px] flex flex-row items-center justify-between pt-3 pb-1 gap-1 sticky top-0 z-10 bg-[var(--background-gray-main)] flex-shrink-0">
-        <div class="flex items-center flex-1">
-          <div class="relative flex items-center">
-            <div @click="toggleLeftPanel" v-if="!isLeftPanelShow"
-              class="flex h-7 w-7 items-center justify-center cursor-pointer rounded-md hover:bg-[var(--fill-tsp-gray-main)]">
-              <PanelLeft class="size-5 text-[var(--icon-secondary)]" />
-            </div>
-          </div>
-        </div>
-        <div class="max-w-full sm:max-w-[768px] sm:min-w-[390px] flex w-full flex-col gap-[4px] overflow-hidden">
-          <div
-            class="text-[var(--text-primary)] text-lg font-medium w-full flex flex-row items-center justify-between flex-1 min-w-0 gap-2">
-            <div class="flex flex-row items-center gap-[6px] flex-1 min-w-0">
-              <span class="whitespace-nowrap text-ellipsis overflow-hidden">
-                {{ title }}
-              </span>
-            </div>
-            <div class="flex items-center gap-2 flex-shrink-0">
-              <button @click="handleFileListShow"
-                class="p-[5px] flex items-center justify-center hover:bg-[var(--fill-tsp-white-dark)] rounded-lg cursor-pointer">
-                <FileSearch class="text-[var(--icon-secondary)]" :size="18" />
-              </button>
-            </div>
-          </div>
-          <div class="w-full flex justify-between items-center">
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <div ref="userMenuRef" class="relative">
-            <div v-if="currentUser" @click="toggleUserMenu"
-              class="relative flex items-center justify-center font-bold cursor-pointer flex-shrink-0 rounded-full overflow-hidden"
-              style="width: 32px; height: 32px; font-size: 16px; color: rgba(255, 255, 255, 0.9); background-color: rgb(59, 130, 246);">
-              {{ avatarLetter }}
-            </div>
-            <div v-if="showUserMenu" class="absolute top-full right-0 mt-2 z-50">
-              <UserMenu />
-            </div>
-          </div>
-        </div>
-      </div>
+    <div ref="chatContainerRef" class="relative flex flex-col h-full flex-1 min-w-0 px-5" style="padding-top: 80px;">
       <div class="mx-auto w-full max-w-full sm:max-w-[768px] sm:min-w-[390px] flex flex-col flex-1">
         <div class="flex flex-col w-full gap-[12px] pb-[80px] pt-[12px] flex-1 overflow-y-auto">
           <ChatMessage v-for="(message, index) in messages" :key="index" :message="message"
@@ -78,11 +46,12 @@
 
 <script setup lang="ts">
 import SimpleBar from '../components/SimpleBar.vue';
-import { ref, onMounted, watch, nextTick, onUnmounted, reactive, toRefs, computed } from 'vue';
+import { ref, onMounted, watch, nextTick, onUnmounted, reactive, toRefs } from 'vue';
 import { useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import ChatBox from '../components/ChatBox.vue';
 import ChatMessage from '../components/ChatMessage.vue';
+import ChatNavbar from '../components/ChatNavbar.vue';
 import * as agentApi from '../api/agent';
 import { Message, MessageContent, ToolContent, StepContent, AttachmentsContent } from '../types/message';
 import {
@@ -96,21 +65,25 @@ import {
 } from '../types/event';
 import ToolPanel from '../components/ToolPanel.vue'
 import PlanPanel from '../components/PlanPanel.vue';
-import { ArrowDown, FileSearch, PanelLeft } from 'lucide-vue-next';
+import { ArrowDown, PanelLeft } from 'lucide-vue-next';
 import { showErrorToast } from '../utils/toast';
 import type { FileInfo } from '../api/file';
 import { useLeftPanel } from '../composables/useLeftPanel'
 import { useSessionFileList } from '../composables/useSessionFileList'
 import { useFilePanel } from '../composables/useFilePanel'
 import { SessionStatus } from '../types/response';
+<<<<<<< HEAD
 import UserMenu from '../components/UserMenu.vue';
 import { useAuth } from '../composables/useAuth';
+=======
+>>>>>>> 5881517 (add navbar to chatUI, add Demo, Pricing, and about pages on landing page)
 
 const router = useRouter()
 const { t } = useI18n()
 const { toggleLeftPanel, isLeftPanelShow } = useLeftPanel()
 const { showSessionFileList } = useSessionFileList()
 const { hideFilePanel } = useFilePanel()
+<<<<<<< HEAD
 const { currentUser } = useAuth()
 const showUserMenu = ref(false)
 const userMenuRef = ref<HTMLElement>()
@@ -125,6 +98,8 @@ const toggleUserMenu = (event: MouseEvent) => {
   event.stopPropagation();
   showUserMenu.value = !showUserMenu.value;
 }
+=======
+>>>>>>> 5881517 (add navbar to chatUI, add Demo, Pricing, and about pages on landing page)
 
 // Create initial state factory
 const createInitialState = () => ({
@@ -534,5 +509,83 @@ const handleFileListShow = () => {
 
 .\[\&\:not\(\:empty\)\]\:pb-2:not(:empty) {
   padding-bottom: .5rem;
+}
+
+/* Panel Toggle Button with glassmorphic design */
+.panel-toggle-btn {
+  position: fixed;
+  left: 16px;
+  top: 26px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+/* Grain texture overlay */
+.panel-toggle-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.15;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+}
+
+.panel-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.75);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.panel-toggle-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Dark Mode */
+:global(.dark) .panel-toggle-btn {
+  background: rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .panel-toggle-btn::before {
+  opacity: 0.2;
+}
+
+:global(.dark) .panel-toggle-btn:hover {
+  background: rgba(30, 30, 30, 0.7);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+  .panel-toggle-btn {
+    left: 12px;
+    top: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
 }
 </style>

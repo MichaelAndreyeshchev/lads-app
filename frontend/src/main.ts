@@ -12,6 +12,9 @@ import HomePage from './pages/HomePage.vue'
 import ChatPage from './pages/ChatPage.vue'
 import LoginPage from './pages/LoginPage.vue'
 import MainLayout from './pages/MainLayout.vue'
+import PricingPage from './pages/PricingPage.vue'
+import AboutPage from './pages/AboutPage.vue'
+import DemoPage from './pages/DemoPage.vue'
 import { LandingPage } from './components/home'
 import { configure } from "vue-gtag";
 
@@ -48,6 +51,18 @@ export const router = createRouter({
     { 
       path: '/login', 
       component: LoginPage
+    },
+    { 
+      path: '/pricing', 
+      component: PricingPage
+    },
+    { 
+      path: '/about', 
+      component: AboutPage
+    },
+    { 
+      path: '/demo', 
+      component: DemoPage
     }
   ]
 })

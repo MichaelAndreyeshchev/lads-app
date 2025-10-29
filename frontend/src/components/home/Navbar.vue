@@ -8,6 +8,13 @@
           <span class="logo-text">LADS</span>
         </div>
 
+        <!-- Navigation Links -->
+        <div class="nav-links">
+          <a href="#" @click.prevent="handleNavigation('/pricing')" class="nav-link">Pricing</a>
+          <a href="#" @click.prevent="handleNavigation('/about')" class="nav-link">About</a>
+          <a href="#" @click.prevent="handleNavigation('/demo')" class="nav-link">Demo</a>
+        </div>
+
         <!-- Auth Buttons -->
         <div class="nav-actions">
           <button @click="handleLogin" class="nav-btn nav-btn-ghost">
@@ -37,6 +44,10 @@ const handleRegister = () => {
 
 const handleLogoClick = () => {
   router.push('/');
+};
+
+const handleNavigation = (path: string) => {
+  router.push(path);
 };
 </script>
 
@@ -393,17 +404,89 @@ const handleLogoClick = () => {
 }
 
 @media (max-width: 480px) {
-  .nav-actions {
+  .navbar-container {
+    top: 10px;
+    padding: 0 10px;
+  }
+
+  .navbar-island {
+    padding: 8px 12px;
+  }
+
+  .navbar-content {
+    gap: 12px;
+  }
+
+  .logo-section {
     gap: 8px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+
+  .logo-image {
+    width: 24px;
+    height: 24px;
+  }
+
+  .nav-actions {
+    gap: 6px;
   }
 
   .nav-btn {
     padding: 6px 12px;
-    font-size: 12px;
+    font-size: 11px;
+    border-radius: 10px;
   }
 
   .nav-btn-ghost {
-    display: none;
+    padding: 6px 10px;
+  }
+
+  .nav-btn-primary {
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .navbar-island {
+    padding: 8px 10px;
+  }
+
+  .navbar-content {
+    gap: 8px;
+  }
+
+  .logo-section {
+    gap: 6px;
+  }
+
+  .logo-text {
+    font-size: 14px;
+  }
+
+  .logo-image {
+    width: 22px;
+    height: 22px;
+  }
+
+  .nav-actions {
+    gap: 5px;
+  }
+
+  .nav-btn {
+    padding: 5px 10px;
+    font-size: 10px;
+    border-radius: 8px;
+  }
+
+  .nav-btn-ghost {
+    padding: 5px 8px;
+  }
+
+  .nav-btn-primary {
+    padding: 5px 10px;
   }
 }
 </style>

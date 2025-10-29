@@ -3,7 +3,7 @@
         <div class="min-w-max inline-block transition-[transform,opacity,scale] duration-150" tabindex="-1"
             role="dialog">
             <div
-                class="flex w-[300px] flex-col bg-[var(--background-menu-white)] rounded-[20px] border-[0.5px] border-[var(--border-dark)] shadow-[0px_8px_32px_0px_var(--shadow-XS)]">
+                class="flex w-[300px] max-w-[calc(100vw-32px)] flex-col bg-[var(--background-menu-white)] rounded-[20px] border-[0.5px] border-[var(--border-dark)] shadow-[0px_8px_32px_0px_var(--shadow-XS)]">
                 <div class="flex gap-2 px-4 pt-5 pb-3 w-full">
                     <div class="relative flex items-center justify-center font-bold cursor-pointer flex-shrink-0">
                         <div class="relative flex items-center justify-center font-bold flex-shrink-0 rounded-full overflow-hidden"
@@ -84,6 +84,10 @@ const { currentUser, logout } = useAuth();
 const { openSettingsDialog } = useSettingsDialog();
 const authProvider = ref<string | null>(null);
 
+const emit = defineEmits<{
+    (e: 'close'): void;
+}>();
+
 // Get first letter of user's fullname for avatar display
 const avatarLetter = computed(() => {
     return currentUser.value?.fullname?.charAt(0)?.toUpperCase() || 'M';
@@ -92,11 +96,13 @@ const avatarLetter = computed(() => {
 // Handle Account click - open settings dialog with account tab
 const handleAccountClick = () => {
     openSettingsDialog('account');
+    emit('close');
 };
 
 // Handle Settings click - open settings dialog with settings tab
 const handleSettingsClick = () => {
     openSettingsDialog('settings');
+    emit('close');
 };
 
 // Handle AWS credentials click - open settings dialog with AWS tab
@@ -106,6 +112,7 @@ const handleAWSClick = () => {
 
 // Handle logout action
 const handleLogout = async () => {
+    emit('close');
     try {
         await logout();
         router.push('/login');
