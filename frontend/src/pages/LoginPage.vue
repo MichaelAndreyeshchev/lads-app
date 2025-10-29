@@ -71,7 +71,7 @@ const switchToReset = () => {
 // Handle successful login/registration
 const handleLoginSuccess = () => {
     const redirect = router.currentRoute.value.query.redirect as string
-    router.push(redirect || '/')
+    router.push(redirect || '/chat')
 }
 
 // Listen for authentication state changes
@@ -97,7 +97,7 @@ const checkRouteMode = () => {
 // Check if already logged in when page loads
 onMounted(() => {
   if (isAuthenticated.value) {
-    router.push('/')
+    router.push('/chat')
   }
   checkRouteMode()
 })
