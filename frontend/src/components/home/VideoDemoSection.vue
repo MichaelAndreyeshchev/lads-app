@@ -82,6 +82,11 @@ const features = [
 </script>
 
 <style scoped>
+/* CSS Variables for reusable textures and optimizations */
+.video-demo-section {
+  --noise-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
 .video-demo-section {
   display: flex;
   align-items: center;
@@ -90,13 +95,15 @@ const features = [
   background: #f5f5f5;
   position: relative;
   overflow: hidden;
+  /* Use CSS containment for better rendering performance */
+  contain: layout style paint;
 }
 
 :global(.dark) .video-demo-section {
   background: #0a0a0a;
 }
 
-/* Grainy texture effect */
+/* Grainy texture effect - simplified */
 .video-demo-section::before {
   content: '';
   position: absolute;
@@ -104,11 +111,13 @@ const features = [
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulance type='fractalNoise' baseFrequency='3.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-image: var(--noise-texture);
   opacity: 0.4;
   pointer-events: none;
   mix-blend-mode: overlay;
   z-index: 1;
+  /* Optimize layer rendering */
+  will-change: opacity;
 }
 
 :global(.dark) .video-demo-section::before {
@@ -140,6 +149,8 @@ const features = [
 .section-header {
   text-align: center;
   margin-bottom: 40px;
+  /* Optimize text rendering */
+  contain: layout style;
 }
 
 .section-title {
@@ -149,6 +160,14 @@ const features = [
   margin-bottom: 16px;
   letter-spacing: -0.025em;
   line-height: 1.1;
+  /* Performance optimizations for text rendering */
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-display: swap;
+  /* Use transform for GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 :global(.dark) .section-title {
@@ -162,6 +181,13 @@ const features = [
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
+  /* Performance optimizations for text rendering */
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-display: swap;
+  /* Use transform for GPU acceleration */
+  transform: translateZ(0);
 }
 
 :global(.dark) .section-subtitle {
@@ -201,9 +227,13 @@ const features = [
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1),
               inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
   overflow: hidden;
+  /* Performance optimizations */
+  will-change: transform;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
-/* Grain texture overlay on glass */
+/* Grain texture overlay on glass - using CSS variable */
 .glass-container::before {
   content: '';
   position: absolute;
@@ -211,7 +241,7 @@ const features = [
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-image: var(--noise-texture);
   opacity: 0.15;
   pointer-events: none;
   mix-blend-mode: overlay;
@@ -246,6 +276,8 @@ const features = [
   border-radius: 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
               inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  /* Performance optimizations */
+  contain: layout style paint;
 }
 
 :global(.dark) .video-wrapper {
@@ -264,6 +296,9 @@ const features = [
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2),
               inset 0 1px 0 rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.1);
+  /* Performance optimizations */
+  contain: layout style paint;
+  transform: translateZ(0);
 }
 
 :global(.dark) .video-container {
@@ -324,6 +359,8 @@ const features = [
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+  /* Performance optimization */
+  contain: layout style;
 }
 
 .feature-card {
@@ -343,9 +380,13 @@ const features = [
               inset 0 -1px 0 rgba(0, 0, 0, 0.05);
   overflow: hidden;
   cursor: default;
+  /* Performance optimizations */
+  will-change: transform;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
-/* Grain texture overlay on cards */
+/* Grain texture overlay on cards - using CSS variable */
 .feature-card::before {
   content: '';
   position: absolute;
@@ -353,7 +394,7 @@ const features = [
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-image: var(--noise-texture);
   opacity: 0.3;
   pointer-events: none;
   mix-blend-mode: overlay;
@@ -467,6 +508,8 @@ const features = [
 .feature-content {
   flex: 1;
   min-width: 0;
+  /* Optimize text rendering */
+  contain: layout style;
 }
 
 .feature-title {
@@ -474,6 +517,10 @@ const features = [
   font-weight: 600;
   color: #000;
   margin-bottom: 4px;
+  /* Performance optimizations for text rendering */
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 :global(.dark) .feature-title {
@@ -484,6 +531,10 @@ const features = [
   font-size: 0.875rem;
   color: rgba(0, 0, 0, 0.65);
   line-height: 1.5;
+  /* Performance optimizations for text rendering */
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 :global(.dark) .feature-description {

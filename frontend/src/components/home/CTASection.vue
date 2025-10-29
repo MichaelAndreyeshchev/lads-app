@@ -60,7 +60,7 @@ import { Rocket, LogIn, Sparkles } from 'lucide-vue-next';
 const router = useRouter();
 
 // Manually set counts - update these values as needed
-const betaWaitlistCount = ref('0');
+const betaWaitlistCount = ref('4');
 const usersDeployingCount = ref('0');
 
 const handleRegister = () => {
