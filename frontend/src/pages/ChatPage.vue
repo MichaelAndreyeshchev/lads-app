@@ -582,7 +582,7 @@ const handleFileListShow = () => {
 @media (max-width: 768px) {
   .panel-toggle-btn {
     left: 12px;
-    top: 12px;
+    top: 18px;
     width: 40px;
     height: 40px;
     border-radius: 12px;
