@@ -1,7 +1,6 @@
 <template>
     <div class="pb-3 relative bg-[var(--background-gray-main)]">
-        <div
-            class="flex flex-col gap-3 rounded-[22px] transition-all relative bg-[var(--fill-input-chat)] py-3 max-h-[300px] shadow-[0px_12px_32px_0px_rgba(0,0,0,0.02)] border border-black/8 dark:border-[var(--border-main)]">
+        <div class="glass-chatbox">
             <ChatBoxFiles ref="chatBoxFileListRef" :attachments="attachments" />
             <div class="overflow-y-auto pl-4 pr-2">
                 <textarea
@@ -111,3 +110,54 @@ watch(() => props.modelValue, (value) => {
     hasTextInput.value = value.trim() !== '';
 });
 </script>
+
+<style scoped>
+.glass-chatbox {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-radius: 24px;
+    padding: 0.75rem 0;
+    max-height: 300px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+}
+
+/* Grain texture overlay */
+.glass-chatbox::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.15;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 1;
+}
+
+.glass-chatbox > * {
+    position: relative;
+    z-index: 2;
+}
+
+:global(.dark) .glass-chatbox {
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .glass-chatbox::before {
+    opacity: 0.2;
+}
+</style>

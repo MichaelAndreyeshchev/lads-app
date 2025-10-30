@@ -14,16 +14,16 @@
       style="padding-top: 80px;">
       <div class="w-full max-w-full sm:max-w-[768px] sm:min-w-[390px] mx-auto mt-[180px] mb-auto">
         <div class="w-full flex pl-4 items-center justify-start pb-4">
-          <span class="text-[var(--text-primary)] text-start font-serif text-[32px] leading-[40px]" :style="{
-            fontFamily:
-              'ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif',
-          }">
-            {{ $t('Hello') }}, {{ currentUser?.fullname }}
-            <br />
-            <span class="text-[var(--text-tertiary)]">
+          <div class="text-[var(--text-primary)] text-start leading-tight">
+            <div class="text-[40px] font-bold tracking-tight">
+              {{ $t('Hello') }}, <span class="italic font-light font-serif" :style="{
+                fontFamily: 'ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif',
+              }">{{ currentUser?.fullname }}</span>
+            </div>
+            <div class="text-[24px] text-[var(--text-tertiary)] font-light mt-1">
               {{ $t('What can I do for you?') }}
-            </span>
-          </span>
+            </div>
+          </div>
         </div>
         <div class="flex flex-col gap-1 w-full">
           <div class="flex flex-col bg-[var(--background-gray-main)] w-full">
