@@ -6,67 +6,122 @@
       <div class="glass-container">
         <!-- Hero Section -->
         <div class="about-hero">
-          <h1 class="about-title">about us</h1>
+          <h1 class="about-title">about <span class="uppercase-text">LADS</span></h1>
           <p class="about-subtitle">
-            We're building the future of DevOps automation
+            The DevOps copilot that reads your cloud and returns a visual, step-by-step plan to deploy, configure, or fix anything.
           </p>
         </div>
 
-        <!-- Mission Section -->
-        <div class="mission-section">
-          <h2 class="section-title">Our Mission</h2>
-          <p class="mission-text">
-            At LADS, we believe DevOps should be accessible, intuitive, and powerful. We're creating intelligent AI agents 
-            that understand your infrastructure, automate complex workflows, and empower teams to ship faster without sacrificing 
-            reliability or security.
-          </p>
-          <p class="mission-text">
-            Founded by engineers who experienced the pain of manual infrastructure management firsthand, we're dedicated to 
-            building tools that make DevOps feel less like ops and more like magic.
-          </p>
+        <!-- Vision Grid -->
+        <div class="vision-grid-section">
+          <div class="vision-card">
+            <div class="vision-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </div>
+            <h3 class="vision-title">Visual Control Plane</h3>
+            <p class="vision-description">Continuously read live state, generate plans, preflight, and apply with guardrails.</p>
+          </div>
+
+          <div class="vision-card">
+            <div class="vision-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 class="vision-title">Ship Like a Senior SRE</h3>
+            <p class="vision-description">Ask for outcomes in plain English, get verified plans day one.</p>
+          </div>
+
+          <div class="vision-card">
+            <div class="vision-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+            </div>
+            <h3 class="vision-title">Plan-Driven DevOps</h3>
+            <p class="vision-description">Move from docs and guesswork to verified, visual plans.</p>
+          </div>
         </div>
 
-        <!-- Team Section -->
-        <div class="team-section">
-          <h2 class="section-title">Meet the Team</h2>
-          <p class="team-intro">
-            We're a small but mighty team of engineers, designers, and DevOps enthusiasts building the next generation of cloud automation.
-          </p>
-          
-          <div class="team-grid">
-            <div class="team-member" v-for="member in teamMembers" :key="member.name">
-              <div class="member-avatar">
-                <img :src="member.avatar" :alt="member.name" />
+        <!-- Principles Section -->
+        <div class="principles-section">
+          <h2 class="section-title">Core Principles</h2>
+          <div class="principles-list">
+            <div class="principle-item">
+              <div class="principle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
               </div>
-              <div class="member-info">
-                <h3 class="member-name">{{ member.name }}</h3>
-                <p class="member-role">{{ member.role }}</p>
+              <div class="principle-content">
+                <h3 class="principle-title">Reality > Intent</h3>
+                <p class="principle-description">Always read live state first</p>
+              </div>
+            </div>
+
+            <div class="principle-item">
+              <div class="principle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="3" y1="9" x2="21" y2="9"></line>
+                  <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+              </div>
+              <div class="principle-content">
+                <h3 class="principle-title">Visual by Default</h3>
+                <p class="principle-description">Interactive flows, not walls of text</p>
+              </div>
+            </div>
+
+            <div class="principle-item">
+              <div class="principle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+              <div class="principle-content">
+                <h3 class="principle-title">Guardrails Everywhere</h3>
+                <p class="principle-description">Simulate, diff, and roll back every change</p>
+              </div>
+            </div>
+
+            <div class="principle-item">
+              <div class="principle-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+              </div>
+              <div class="principle-content">
+                <h3 class="principle-title">Short Path to Value</h3>
+                <p class="principle-description">One prompt → one plan → one safe apply</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Values Section -->
-        <div class="values-section">
-          <h2 class="section-title">What We Believe</h2>
-          <div class="values-list">
-            <div class="value-item">
-              <h3 class="value-title">Developer First</h3>
-              <p class="value-description">
-                Tools should work for developers, not the other way around. We prioritize simplicity and developer experience in everything we build.
-              </p>
-            </div>
-            <div class="value-item">
-              <h3 class="value-title">Security by Default</h3>
-              <p class="value-description">
-                Your infrastructure is critical. We build security and compliance into every feature, so you never have to choose between speed and safety.
-              </p>
-            </div>
-            <div class="value-item">
-              <h3 class="value-title">Open & Transparent</h3>
-              <p class="value-description">
-                We believe in building in the open. Our roadmap is public, our community is engaged, and we're always listening to feedback.
-              </p>
+        <!-- Team Section -->
+        <div class="team-section">
+          <h2 class="section-title">Meet the Team</h2>
+          <div class="team-list">
+            <div class="team-member" v-for="member in teamMembers" :key="member.name">
+              <div class="member-avatar">
+                <img :src="member.avatar" :alt="member.name" />
+              </div>
+              <div class="member-details">
+                <h3 class="member-name">{{ member.name }}</h3>
+                <p class="member-role">{{ member.role }}</p>
+                <p class="member-description">{{ member.description }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -81,29 +136,28 @@ import Navbar from '../components/home/Navbar.vue';
 
 const teamMembers = ref([
   {
-    name: 'Alex Chen',
-    role: 'Co-Founder & CEO',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex'
+    name: 'Michael Andrev',
+    role: 'Founder',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Michael',
+    description: 'Leading product vision and company strategy. Building the future of DevOps automation.'
   },
   {
-    name: 'Sarah Kim',
-    role: 'Co-Founder & CTO',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah'
+    name: 'Anas M',
+    role: 'Co-Founder & Systems Engineer',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Anas',
+    description: 'Architecting our cloud infrastructure platform and real-time state monitoring system.'
   },
   {
-    name: 'Marcus Johnson',
-    role: 'Lead Engineer',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus'
+    name: 'Ali Anwar',
+    role: 'Co-Founder & ML',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ali',
+    description: 'Building intelligent AI systems and machine learning models for cloud automation.'
   },
   {
-    name: 'Priya Patel',
-    role: 'Product Designer',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya'
-  },
-  {
-    name: 'David Wong',
-    role: 'DevOps Architect',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=David'
+    name: 'Andrew Hunter',
+    role: 'Marketing & UI/UX',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Andrew',
+    description: 'Crafting visual flows and interfaces that make complex infrastructure simple.'
   }
 ]);
 </script>
@@ -137,6 +191,22 @@ const teamMembers = ref([
 
 :global(.dark) .about-page::before {
   opacity: 0.25;
+}
+
+/* Subtle vignette effect */
+.about-page::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.15) 100%);
+  pointer-events: none;
+}
+
+:global(.dark) .about-page::after {
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
 }
 
 .about-container {
@@ -214,6 +284,10 @@ const teamMembers = ref([
   text-transform: lowercase;
 }
 
+.uppercase-text {
+  text-transform: uppercase;
+}
+
 :global(.dark) .about-title {
   color: #fff;
 }
@@ -230,14 +304,110 @@ const teamMembers = ref([
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Mission Section */
-.mission-section {
+/* Vision Grid Section */
+.vision-grid-section {
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+:global(.dark) .vision-grid-section {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.vision-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.vision-card:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+:global(.dark) .vision-card {
+  background: rgba(30, 30, 30, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .vision-card:hover {
+  background: rgba(40, 40, 40, 0.6);
+}
+
+.vision-icon {
+  color: #3b82f6;
+  opacity: 1;
+}
+
+.vision-card:nth-child(1) .vision-icon {
+  color: #3b82f6; /* Blue */
+}
+
+.vision-card:nth-child(2) .vision-icon {
+  color: #8b5cf6; /* Purple */
+}
+
+.vision-card:nth-child(3) .vision-icon {
+  color: #ec4899; /* Pink */
+}
+
+:global(.dark) .vision-icon {
+  opacity: 0.95;
+}
+
+:global(.dark) .vision-card:nth-child(1) .vision-icon {
+  color: #60a5fa; /* Lighter Blue */
+}
+
+:global(.dark) .vision-card:nth-child(2) .vision-icon {
+  color: #a78bfa; /* Lighter Purple */
+}
+
+:global(.dark) .vision-card:nth-child(3) .vision-icon {
+  color: #f472b6; /* Lighter Pink */
+}
+
+.vision-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+:global(.dark) .vision-title {
+  color: #fff;
+}
+
+.vision-description {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+
+:global(.dark) .vision-description {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Principles Section */
+.principles-section {
   margin-bottom: 48px;
   padding-bottom: 48px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-:global(.dark) .mission-section {
+:global(.dark) .principles-section {
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -245,7 +415,7 @@ const teamMembers = ref([
   font-size: 24px;
   font-weight: 600;
   color: #000;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   letter-spacing: -0.5px;
 }
 
@@ -253,76 +423,174 @@ const teamMembers = ref([
   color: #fff;
 }
 
-.mission-text {
-  font-size: 15px;
-  color: rgba(0, 0, 0, 0.7);
-  line-height: 1.7;
-  margin-bottom: 16px;
+.principles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.mission-text:last-child {
-  margin-bottom: 0;
+.principle-item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
 }
 
-:global(.dark) .mission-text {
-  color: rgba(255, 255, 255, 0.7);
+.principle-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  color: #000;
+}
+
+:global(.dark) .principle-icon {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.principle-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.principle-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+:global(.dark) .principle-title {
+  color: #fff;
+}
+
+.principle-description {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 1.5;
+  margin: 0;
+}
+
+:global(.dark) .principle-description {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* Team Section */
 .team-section {
-  margin-bottom: 48px;
-  padding-bottom: 48px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 0;
 }
 
-:global(.dark) .team-section {
-  border-bottom-color: rgba(255, 255, 255, 0.1);
-}
-
-.team-intro {
-  font-size: 15px;
-  color: rgba(0, 0, 0, 0.7);
-  line-height: 1.7;
-  margin-bottom: 32px;
-}
-
-:global(.dark) .team-intro {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 24px;
+.team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .team-member {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  cursor: default;
+}
+
+/* Grain texture overlay on member cards */
+.team-member::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+/* Glossy highlight on member cards */
+.team-member::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.team-member > * {
+  position: relative;
+  z-index: 3;
+}
+
+:global(.dark) .team-member {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+:global(.dark) .team-member::before {
+  opacity: 0.35;
+}
+
+.team-member:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+}
+
+:global(.dark) .team-member:hover {
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
 
 .member-avatar {
-  width: 80px;
-  height: 80px;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
 }
 
-.member-avatar:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
 :global(.dark) .member-avatar {
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
   background: rgba(30, 30, 30, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .member-avatar img {
@@ -331,18 +599,31 @@ const teamMembers = ref([
   object-fit: cover;
 }
 
-.member-info {
+.team-member:hover .member-avatar {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+:global(.dark) .team-member:hover .member-avatar {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.member-details {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .member-name {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: #000;
   margin: 0;
-  line-height: 1.2;
+  letter-spacing: -0.3px;
 }
 
 :global(.dark) .member-name {
@@ -350,54 +631,26 @@ const teamMembers = ref([
 }
 
 .member-role {
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.6);
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.75);
   margin: 0;
-  line-height: 1.3;
+  letter-spacing: -0.1px;
 }
 
 :global(.dark) .member-role {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.75);
 }
 
-/* Values Section */
-.values-section {
-  margin-bottom: 0;
-}
-
-.values-list {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.value-item {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.value-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #000;
-  margin: 0;
-  letter-spacing: -0.3px;
-}
-
-:global(.dark) .value-title {
-  color: #fff;
-}
-
-.value-description {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.7);
-  line-height: 1.7;
+.member-description {
+  font-size: 0.9375rem;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 1.6;
   margin: 0;
 }
 
-:global(.dark) .value-description {
-  color: rgba(255, 255, 255, 0.7);
+:global(.dark) .member-description {
+  color: rgba(255, 255, 255, 0.65);
 }
 
 /* Mobile Responsive */
@@ -423,27 +676,31 @@ const teamMembers = ref([
     font-size: 20px;
   }
 
-  .mission-text,
-  .team-intro {
-    font-size: 14px;
+  .vision-card {
+    padding: 20px;
   }
 
-  .team-grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 20px;
+  .team-member {
+    padding: 20px;
+    gap: 16px;
+    border-radius: 16px;
   }
 
   .member-avatar {
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
   }
 
   .member-name {
-    font-size: 13px;
+    font-size: 1.125rem;
   }
 
   .member-role {
-    font-size: 11px;
+    font-size: 0.9375rem;
+  }
+
+  .member-description {
+    font-size: 0.875rem;
   }
 }
 
@@ -470,8 +727,8 @@ const teamMembers = ref([
     font-size: 15px;
   }
 
-  .mission-section,
-  .team-section {
+  .vision-grid-section,
+  .principles-section {
     margin-bottom: 32px;
     padding-bottom: 32px;
   }
@@ -481,18 +738,59 @@ const teamMembers = ref([
     margin-bottom: 16px;
   }
 
-  .team-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .vision-card {
+    padding: 18px;
+  }
+
+  .vision-title {
+    font-size: 16px;
+  }
+
+  .vision-description {
+    font-size: 13px;
+  }
+
+  .principle-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .principle-item {
+    gap: 12px;
+  }
+
+  .principle-title {
+    font-size: 15px;
+  }
+
+  .principle-description {
+    font-size: 13px;
+  }
+
+  .team-list {
     gap: 16px;
   }
 
-  .member-avatar {
-    width: 56px;
-    height: 56px;
+  .team-member {
+    padding: 16px;
+    gap: 12px;
   }
 
-  .values-list {
-    gap: 20px;
+  .member-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .member-name {
+    font-size: 1rem;
+  }
+
+  .member-role {
+    font-size: 0.875rem;
+  }
+
+  .member-description {
+    font-size: 0.8125rem;
   }
 }
 </style>

@@ -147,6 +147,22 @@ const handleScheduleDemo = () => {
   opacity: 0.25;
 }
 
+/* Subtle vignette effect */
+.demo-page::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.15) 100%);
+  pointer-events: none;
+}
+
+:global(.dark) .demo-page::after {
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+}
+
 .demo-container {
   position: relative;
   z-index: 2;
