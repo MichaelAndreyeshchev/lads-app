@@ -53,7 +53,7 @@ services:
       - AUTH_PROVIDER=password
       - SANDBOX_ADDRESS=sandbox # Use single container as sandbox
       # Allow overriding n8n webhooks without code edits
-      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-https://stonegolem.app.n8n.cloud/webhook-test/a33ee13a-729c-4b41-ad41-a49943fca079}
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-https://stonegolem.app.n8n.cloud/webhook/a33ee13a-729c-4b41-ad41-a49943fca079}
       - N8N_FALLBACK_WEBHOOK_URL=${N8N_FALLBACK_WEBHOOK_URL:-http://mockserver:8090/webhook-test/local}
 
   sandbox:

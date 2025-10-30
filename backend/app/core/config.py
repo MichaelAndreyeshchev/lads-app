@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     max_tokens: int = 2000
     
     # N8n workflow configuration
-    n8n_webhook_url: str = "https://stonegolem.app.n8n.cloud/webhook-test/a33ee13a-729c-4b41-ad41-a49943fca079"
+    n8n_webhook_url: str = "https://stonegolem.app.n8n.cloud/webhook/a33ee13a-729c-4b41-ad41-a49943fca079"
     # Optional fallback URL used when primary webhook returns 404/410
     n8n_fallback_webhook_url: Optional[str] = None
     llm_provider: str = "n8n"  # "openai" or "n8n"
