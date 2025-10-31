@@ -12,6 +12,13 @@ class N8nLLM(LLM):
     def __init__(self):
         settings = get_settings()
         self.webhook_url = settings.n8n_webhook_url
+        
+        # Automatically use production webhook if test webhook is configured
+        if "/webhook-test/" in self.webhook_url:
+            original_url = self.webhook_url
+            self.webhook_url = self.webhook_url.replace("/webhook-test/", "/webhook/")
+            logger.warning(f"Converted test webhook URL to production: {original_url} -> {self.webhook_url}")
+        
         # Optional fallback webhook (e.g., switch from /webhook-test/ to /webhook/ or use local mockserver)
         self.fallback_webhook_url: Optional[str] = getattr(settings, "n8n_fallback_webhook_url", None)
         
@@ -61,7 +68,7 @@ class N8nLLM(LLM):
 
             logger.debug(f"Sending request to n8n workflow: {payload}")
 
-            async with httpx.AsyncClient(timeout=60.0) as client:
+            async with httpx.AsyncClient(timeout=120.0) as client:
                 try:
                     response = await client.post(
                         self.webhook_url,
@@ -69,6 +76,12 @@ class N8nLLM(LLM):
                         headers={"Content-Type": "application/json"}
                     )
                     response.raise_for_status()
+                except httpx.TimeoutException as timeout_err:
+                    logger.error(f"Timeout calling n8n webhook (120s): {str(timeout_err)}")
+                    raise Exception(f"n8n workflow timeout after 120 seconds. The workflow may be processing a complex request or the service may be slow.") from timeout_err
+                except httpx.ConnectError as conn_err:
+                    logger.error(f"Connection error calling n8n webhook: {str(conn_err)}")
+                    raise Exception(f"Failed to connect to n8n workflow at {self.webhook_url}. Please check if the n8n service is running and accessible.") from conn_err
                 except httpx.HTTPStatusError as http_err:
                     status = http_err.response.status_code if http_err.response is not None else None
                     # If test webhook is 404, try production path automatically
@@ -101,20 +114,42 @@ class N8nLLM(LLM):
                         content = str(data[0]["output"])
                     elif isinstance(data, dict) and "output" in data:
                         content = str(data["output"])
+                    elif isinstance(data, dict):
+                        # If it's already a dict but without 'output' key, convert to string
+                        import json
+                        content = json.dumps(data)
                     else:
                         content = response.text
-                except Exception:
+                except Exception as e:
+                    logger.debug(f"Failed to parse n8n response as JSON: {str(e)}")
                     content = response.text
 
-                logger.debug(f"Response from n8n: {content}")
+                logger.debug(f"Response from n8n (first 200 chars): {content[:200]}...")
 
-                # If content looks like JSON for tool calls, leave as-is; otherwise wrap plain text
+                # Check if content is already valid JSON, if not ensure it's properly wrapped
                 tool_calls = None
+                try:
+                    # Try to parse as JSON to see if it's already valid
+                    import json
+                    json.loads(content)
+                    # Content is valid JSON, use as-is
+                    logger.debug("n8n response is valid JSON")
+                except json.JSONDecodeError:
+                    # Content is plain text, log it for debugging
+                    logger.info(f"n8n response is plain text (not JSON), will be handled by parser")
+                
                 return {
                     "role": "assistant",
                     "content": content,
                     "tool_calls": tool_calls,
                 }
+        except httpx.ReadTimeout as read_err:
+            logger.error(f"Read timeout while waiting for n8n response: {str(read_err)}")
+            raise Exception(f"n8n workflow started but did not respond within the timeout period. The workflow may have crashed or is taking too long to process.") from read_err
+        except httpx.NetworkError as net_err:
+            logger.error(f"Network error calling n8n workflow: {str(net_err)}")
+            raise Exception(f"Network error while communicating with n8n workflow. The connection may have been interrupted or the service may be unreachable.") from net_err
         except Exception as e:
-            logger.error(f"Error calling n8n workflow: {str(e)}")
+            logger.error(f"Unexpected error calling n8n workflow: {str(e)}")
+            logger.exception("Full traceback:")
             raise
