@@ -72,34 +72,12 @@ import { useLeftPanel } from '../composables/useLeftPanel'
 import { useSessionFileList } from '../composables/useSessionFileList'
 import { useFilePanel } from '../composables/useFilePanel'
 import { SessionStatus } from '../types/response';
-<<<<<<< HEAD
-import UserMenu from '../components/UserMenu.vue';
-import { useAuth } from '../composables/useAuth';
-=======
->>>>>>> 5881517 (add navbar to chatUI, add Demo, Pricing, and about pages on landing page)
 
 const router = useRouter()
 const { t } = useI18n()
 const { toggleLeftPanel, isLeftPanelShow } = useLeftPanel()
 const { showSessionFileList } = useSessionFileList()
 const { hideFilePanel } = useFilePanel()
-<<<<<<< HEAD
-const { currentUser } = useAuth()
-const showUserMenu = ref(false)
-const userMenuRef = ref<HTMLElement>()
-
-// Get first letter of user's fullname for avatar display
-const avatarLetter = computed(() => {
-  return currentUser.value?.fullname?.charAt(0)?.toUpperCase() || 'U';
-})
-
-// Toggle user menu
-const toggleUserMenu = (event: MouseEvent) => {
-  event.stopPropagation();
-  showUserMenu.value = !showUserMenu.value;
-}
-=======
->>>>>>> 5881517 (add navbar to chatUI, add Demo, Pricing, and about pages on landing page)
 
 // Create initial state factory
 const createInitialState = () => ({
